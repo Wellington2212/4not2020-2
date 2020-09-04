@@ -37,4 +37,4 @@ const esquema = mongoose.Schema({
     modelo serão armazenados no MongoDB
 */
 
-MSFIDOCredentialAssertion.exports = mongoose.model('Curso', esquema, 'cursos')
+module.exports = mongoose.model('Curso', esquema, 'cursos')
