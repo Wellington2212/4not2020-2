@@ -32,7 +32,7 @@ const Curso = require('../models/Curso')
 const controller = {} //objeto vazio
 
 //Operação CREATE, função novo()
-controller.novo = async(req, res) =>{
+controller.novo = async(req, res) => {
     //Usa os dados que chegam dentro do body da requisição e os envia ao BD para criação de um novo objeto
     try {
         await Curso.create(req.body)
@@ -45,4 +45,35 @@ controller.novo = async(req, res) =>{
         res.status(500).send(erro)
     }
 }
+
+//Operação RETRIEVE(all), função listar()
+controller.listar = async(req, res) => {
+    try{
+        let dados = await Curso.find() //Traz todos os cursos cadastrados
+        res.send(dados) //vai com status HTTP 200
+    }
+    catch(erro){
+        console.log(erro)
+        res.status(500).send(erro)
+    }
+}
+
+//Operação RETRIEVE (one), função obterUm()
+controller.obterUm = async(req, res) =>{
+    try{
+        //Capturando o parametro id da URL
+        const id = req.params.id
+        let obj = await Curso.findById(id)
+
+        // O objeto existe e foi encontrado
+        if(obj) res.send(obj) // HTTP 200
+        //não encontrado
+        else res.status(404).end()//HTTP 404: Not found
+    }
+    catch(erro){
+    console.log(erro)
+    res.status(500).send(erro)
+    }
+}
+
 module.exports = controller
